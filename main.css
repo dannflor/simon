@@ -71,8 +71,8 @@ footer a {
   position: absolute;
   min-width: 350px;
   min-height: 350px;
-  max-width: min(80vmin, 1000px);
-  max-height: min(80vmin, 1000px);
+  max-width: min(60vmin, 1000px);
+  max-height: min(60vmin, 1000px);
 }
 
 .button-container {
