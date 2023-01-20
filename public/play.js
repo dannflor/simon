@@ -74,10 +74,6 @@ class Game {
     this.#allowPlayer = true;
   }
 
-  #getPlayerName() {
-    return localStorage.getItem('userName') ?? 'Mystery player';
-  }
-
   async #playSequence(delayMs = 0) {
     if (delayMs > 0) {
       await delay(delayMs);
@@ -85,6 +81,10 @@ class Game {
     for (const btn of this.#sequence) {
       await btn.press();
     }
+  }
+
+  #getPlayerName() {
+    return localStorage.getItem('userName') ?? 'Mystery player';
   }
 
   #addNote() {
@@ -170,4 +170,3 @@ function delay(milliseconds) {
 function loadSound(filename) {
   return new Audio('assets/' + filename);
 }
-  
