@@ -39,7 +39,7 @@ printf "\n----> Deploy the service on the target\n"
 ssh -p 22 -i $key ubuntu@$hostname << ENDSSH
 cd services/${service}
 npm install
-pm2 restart ${service} --update-env
+pm2 restart ${service} 
 ENDSSH
 
 # Step 5
