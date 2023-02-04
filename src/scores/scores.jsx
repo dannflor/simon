@@ -1,44 +1,61 @@
-async function loadScores() {
-  try {
-    // Get the latest high scores from the service
-    const response = await fetch('/api/scores');
-    scores = await response.json();
+import React from 'react';
 
-    // Save the scores in case we go offline in the future
-    localStorage.setItem('scores', JSON.stringify(scores));
-  } catch {
-    // If there was an error then just use the last saved scores
-    const scoresText = localStorage.getItem('scores');
-    if (scoresText) {
-      scores = JSON.parse(scoresText);
+import './scores.css';
+
+export function Scores() {
+  const [scores, setScores] = React.useState([]);
+
+  // Demonstrates calling a service asynchronously so that
+  // React can properly update state objects with the results.
+  React.useEffect(() => {
+    fetch('/api/scores')
+      .then((response) => response.json())
+      .then((scores) => {
+        setScores(scores);
+        localStorage.setItem('scores', JSON.stringify(scores));
+      })
+      .catch(() => {
+        const scoresText = localStorage.getItem('scores');
+        if (scoresText) {
+          setScores(JSON.parse(scoresText));
+        }
+      });
+  }, []);
+
+  // Demonstrates rendering an array with React
+  const scoreRows = [];
+  if (scores.length) {
+    for (const [i, score] of scores.entries()) {
+      scoreRows.push(
+        <tr key={i}>
+          <td>{i}</td>
+          <td>{score.name.split('@')[0]}</td>
+          <td>{score.score}</td>
+          <td>{score.date}</td>
+        </tr>
+      );
     }
+  } else {
+    scoreRows.push(
+      <tr key='0'>
+        <td colSpan='4'>Be the first to score</td>
+      </tr>
+    );
   }
-  
-    const tableBodyEl = document.querySelector('#scores');
-  
-    if (scores.length) {
-      for (const [i, score] of scores.entries()) {
-        const positionTdEl = document.createElement('td');
-        const nameTdEl = document.createElement('td');
-        const scoreTdEl = document.createElement('td');
-        const dateTdEl = document.createElement('td');
-  
-        positionTdEl.textContent = i + 1;
-        nameTdEl.textContent = score.name;
-        scoreTdEl.textContent = score.score;
-        dateTdEl.textContent = score.date;
-  
-        const rowEl = document.createElement('tr');
-        rowEl.appendChild(positionTdEl);
-        rowEl.appendChild(nameTdEl);
-        rowEl.appendChild(scoreTdEl);
-        rowEl.appendChild(dateTdEl);
-  
-        tableBodyEl.appendChild(rowEl);
-      }
-    } else {
-      tableBodyEl.innerHTML = '<tr><td colSpan=4>Be the first to score</td></tr>';
-    }
-  }
-  
-  loadScores();
+
+  return (
+    <main className='container-fluid bg-secondary text-center'>
+      <table className='table table-warning table-striped-columns'>
+        <thead className='table-dark'>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Score</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody id='scores'>{scoreRows}</tbody>
+      </table>
+    </main>
+  );
+}
