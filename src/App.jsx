@@ -66,14 +66,13 @@ function App() {
         </nav>
       </header>
       <Routes>
-      <Route path='/' element={<Login userName={userName} authState={authState} onAuthChange={(username, state) => {
-          setUserName(username);
-          setAuthState(state);
-          if (state === AuthState.Authenticated) {
-            // Set the 
-          }
-        }} />} exact />
-          <Route path='/play' element={<Play />} />
+        <Route path='/' element={<Login userName={userName} authState={authState} onAuthChange={(username, state) => {
+            setUserName(username);
+            setAuthState(state);
+          }} />} exact />
+          <Route path='/play' element={<Play 
+            userName={userName}
+          />} />
           <Route path='/scores' element={<Scores />} />
           <Route path='/about' element={<About />} />
           <Route path='*' element={<NotFound />} />

@@ -29,7 +29,6 @@ apiRouter.post('/auth/create', async (req, res) => {
     res.status(409).send({ msg: 'Existing user' });
   } else {
     const user = await DB.createUser(req.body.email, req.body.password);
-
     // Set the cookie
     setAuthCookie(res, user.token);
 
@@ -49,7 +48,7 @@ apiRouter.post('/auth/login', async (req, res) => {
       return;
     }
   }
-  res.status(401).send({ msg: 'Unauthorized' });
+  res.status(401).send({ msg: 'test' });
 });
 
 // DeleteAuth token if stored in cookie
