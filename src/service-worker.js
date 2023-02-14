@@ -43,6 +43,7 @@ precacheAndRoute([
   { url: 'button-bottom-left.mp3', revision: '1' },
   { url: 'button-bottom-right.mp3', revision: '1' },
   { url: 'error.mp3', revision: '1' },
+  { url: 'apple-touch-icon.png', revision: '1' },
 ]);
 
 // Generically cache resources as they are used with a CacheFirst strategy.
