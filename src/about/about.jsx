@@ -30,7 +30,13 @@ export class About extends React.Component {
       .then((data) => {
         this.setState({ quote: data.content, quoteAuthor: data.author });
       })
-      .catch();
+      .catch(() => {
+        // Use offline fallback classic quote
+        this.setState({
+          quote: `Always bet on JavaScript`,
+          quoteAuthor: `Brendan Eich`,
+        });
+      });
   }
 
   render() {
